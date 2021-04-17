@@ -1,3 +1,11 @@
+# ==============================================================================
+#
+# MUSIQu.py
+# Author: Kangrui Xue
+# WARNING: code is outdated (from Freshman year) -- needs refactoring
+#
+# ==============================================================================
+
 from Tkinter import *
 from tkFileDialog import askopenfilename
 import copy
@@ -15,8 +23,8 @@ def pauliZ(q):
     for i in range(0, len(states)):
         states[i] = states[i] + Z(q)
 
+# ==============================================================================
 from math import pi
-
 # quantum fourier transform implementation
 def QFT(q0, q1, q2):
     for i in range(0, len(states)):
@@ -26,6 +34,7 @@ def reset():
     for i in range(0, len(states)):
         states[i] = backup[i]
 
+# ==============================================================================
 # read initial qubit states from text file
 def getFile(f):
     del states[:]
@@ -41,6 +50,7 @@ def getFile(f):
     for i in range(0, len(states)):
         backup.append(copy.deepcopy(states[i]))
 
+# ==============================================================================
 def run():
     # calculates probabilities after qubit operations
     coefs = []
@@ -50,11 +60,12 @@ def run():
     print(probs)
     playAudio(probs)
 
+# ==============================================================================
 def playAudio(volume):
     import pyaudio
     audio = pyaudio.PyAudio()
     fs = 44100    # sampling rate, Hz, must be integer
-    tempo = 2.0   # quarter note length, may be float
+    tempo = 2.0   # quarter note length, float
     stream = audio.open(format=pyaudio.paFloat32, channels=1, rate=fs, output=True)
 
     notes = []
@@ -80,6 +91,7 @@ def playAudio(volume):
     stream.close()
     audio.terminate()
 
+# ==============================================================================
 from pyquil.quil import Program
 from pyquil.api import QVMConnection
 from pyquil.gates import I, X, Y, Z, H, CPHASE, CNOT, SWAP, MEASURE
